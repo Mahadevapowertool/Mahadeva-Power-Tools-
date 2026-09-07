@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mahadeva Power Tools</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f6f8;
+      color: #172033;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 15px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 13px;
+      color: #cbd5e1;
+      margin-top: 3px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+      cursor: pointer;
+    }
+
+    .hero {
+      background: #1f2937;
+      color: white;
+      padding: 55px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin: 0 0 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.6;
+      color: #dbeafe;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 30px 18px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    }
+
+    .product img {
+      width: 100%;
+      height: 210px;
+      object-fit: contain;
+      background: #f8fafc;
+    }
+
+    .product-content {
+      padding: 16px;
+    }
+
+    .product h3 {
+      margin: 0 0 8px;
+    }
+
+    .description {
+      color: #64748b;
+      min-height: 42px;
+    }
+
+    .price {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 12px 0;
+    }
+
+    .stock {
+      font-size: 14px;
+      color: #475569;
+      margin-bottom: 12px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .buy {
+      width: 100%;
+      background: #16a34a;
+      color: white;
+    }
+
+    .admin-btn {
+      background: #2563eb;
+      color: white;
+    }
+
+    .delete {
+      background: #dc2626;
+      color: white;
+    }
+
+    .edit {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .logout {
+      background: #475569;
+      color: white;
+    }
+
+    .contact {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 35px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.06);
+    }
+
+    .contact p {
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .contact a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .admin {
+      display: none;
+      background: white;
+      margin: 25px auto;
+      max-width: 900px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    }
+
+    .admin h2 {
+      text-align: left;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 5px;
+    }
+
+    .form-box {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .admin-product {
+      border: 1px solid #e2e8f0;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    .admin-product-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+    }
+
+    .modal-box {
+      background: white;
+      width: 100%;
+      max-width: 500px;
+      padding: 25px;
+      border-radius: 15px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-box h2 {
+      text-align: left;
+    }
+
+    .close {
+      float: right;
+      background: #e2e8f0;
+    }
+
+    .whatsapp {
+      background: #25D366;
+      color: white;
+      width: 100%;
+    }
+
+    footer {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      margin-top: 40px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: #64748b;
+    }
+
+    @media(max-width: 700px) {
+      .header-inner {
+        flex-direction: column;
+      }
+
+      nav a {
+        margin: 0 6px;
+        font-size: 14px;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .hero {
+        padding: 40px 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      Mahadeva Power Tools
+      <span>Power Tools • Spare Parts • Accessories</span>
+    </div>
+
+    <nav>
+      <a onclick="scrollToProducts()">Products</a>
+      <a onclick="scrollToContact()">Contact</a>
+      <a onclick="openLogin()">Admin</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Mahadeva Power Tools</h1>
+  <p>
+    Quality power tools, spare parts and accessories.
+    Browse our products and order easily through WhatsApp.
+  </p>
+</section>
+
+<section class="container" id="productsSection">
+
+  <h2>Our Products</h2>
+
+  <div id="products" class="products">
+    <div class="empty">Products loading...</div>
+  </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section class="container" id="contactSection">
+
+  <div class="contact">
+
+    <h2>Contact Us</h2>
+
+    <p>
+      <strong>Shop:</strong>
+      <span id="shopName">Mahadeva Power Tools</span>
+    </p>
+
+    <p>
+      📍 <strong>Address:</strong><br>
+      <span id="shopAddress">Address not added</span>
+    </p>
+
+    <p>
+      📞 <strong>Phone:</strong><br>
+      <a id="phone1Link" href="#">8137097710</a><br>
+      <a id="phone2Link" href="#">9061658620</a>
+    </p>
+
+    <p>
+      ✉️ <strong>Email:</strong><br>
+      <a id="emailLink" href="#">
+        mahadevapowertolls3@gmil.com
+      </a>
+    </p>
+
+    <p>
+      💬 <strong>WhatsApp:</strong><br>
+      <a id="whatsappContact" href="#" target="_blank">
+        Chat on WhatsApp
+      </a>
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- ADMIN PANEL -->
+
+<section id="adminPanel" class="admin">
+
+  <button class="logout" onclick="logoutAdmin()">
+    Logout
+  </button>
+
+  <h2>Admin Panel</h2>
+
+  <!-- SHOP SETTINGS -->
+
+  <div class="form-box">
+
+    <h3>🏪 Shop Details</h3>
+
+    <label>Shop Name</label>
+    <input id="settingShopName">
+
+    <label>Full Address</label>
+    <textarea id="settingAddress"></textarea>
+
+    <label>District</label>
+    <input id="settingDistrict">
+
+    <label>State</label>
+    <input id="settingState">
+
+    <label>PIN Code</label>
+    <input id="settingPin">
+
+    <label>Phone 1</label>
+    <input id="settingPhone1">
+
+    <label>Phone 2</label>
+    <input id="settingPhone2">
+
+    <label>Email</label>
+    <input id="settingEmail">
+
+    <label>WhatsApp Number</label>
+    <input id="settingWhatsapp">
+
+    <button class="admin-btn" onclick="saveSettings()">
+      Save Shop Details
+    </button>
+
+  </div>
+
+
+  <!-- PRODUCT ADD -->
+
+  <div class="form-box">
+
+    <h3>➕ Add Product</h3>
+
+    <label>Product Name</label>
+    <input id="productName">
+
+    <label>Product Image URL</label>
+    <input id="productImage"
+           placeholder="https://example.com/image.jpg">
+
+    <label>Price</label>
+    <input id="productPrice" type="number">
+
+    <label>Stock Quantity</label>
+    <input id="productStock" type="number">
+
+    <label>Description</label>
+    <textarea id="productDescription"></textarea>
+
+    <button class="admin-btn" onclick="addProduct()">
+      Add Product
+    </button>
+
+  </div>
+
+
+  <!-- ADMIN PRODUCTS -->
+
+  <div class="form-box">
+
+    <h3>📦 Manage Products</h3>
+
+    <div id="adminProducts">
+      Loading...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LOGIN MODAL -->
+
+<div id="loginModal" class="modal">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeLogin()">✕</button>
+
+    <h2>Admin Login</h2>
+
+    <label>Email</label>
+    <input id="loginEmail"
+           type="email"
+           value="mahadevapowertolls3@gmil.com">
+
+    <label>Password</label>
+    <input id="loginPassword" type="password">
+
+    <button class="admin-btn"
+            style="width:100%"
+            onclick="loginAdmin()">
+      Login
+    </button>
+
+    <p id="loginMessage"></p>
+
+  </div>
+
+</div>
+
+
+<!-- ORDER MODAL -->
+
+<div id="orderModal" class="modal">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeOrder()">✕</button>
+
+    <h2>Place Order</h2>
+
+    <p>
+      <strong>Product:</strong>
+      <span id="orderProductName"></span>
+    </p>
+
+    <p>
+      <strong>Price:</strong>
+      ₹<span id="orderProductPrice"></span>
+    </p>
+
+    <input type="hidden" id="orderProductId">
+
+    <label>Your Name</label>
+    <input id="customerName">
+
+    <label>Mobile Number</label>
+    <input id="customerMobile">
+
+    <label>Delivery Address</label>
+    <textarea id="customerAddress"></textarea>
+
+    <label>Quantity</label>
+    <input id="customerQuantity"
+           type="number"
+           value="1"
+           min="1">
+
+    <button class="whatsapp"
+            onclick="placeOrder()">
+      💬 Order via WhatsApp
+    </button>
+
+    <p id="orderMessage"></p>
+
+  </div>
+
+</div>
+
+
+<footer>
+  <p>© <span id="year"></span> Mahadeva Power Tools</p>
+</footer>
+
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    getDoc,
+    doc,
+    updateDoc,
+    deleteDoc,
+    setDoc,
+    query,
+    orderBy,
+    serverTimestamp,
+    runTransaction
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+  /* =====================================================
+     🔥 PUT YOUR FIREBASE CONFIG HERE
+     ===================================================== */
+
+  const firebaseConfig = {
+
+    apiKey: "YOUR_API_KEY",
+
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+
+    projectId: "YOUR_PROJECT_ID",
+
+    storageBucket: "YOUR_PROJECT.appspot.com",
+
+    messagingSenderId: "YOUR_SENDER_ID",
+
+    appId: "YOUR_APP_ID"
+
+  };
+
+
+  const app = initializeApp(firebaseConfig);
+
+  const auth = getAuth(app);
+
+  const db = getFirestore(app);
+
+
+  let productsData = {};
+
+  let shopSettings = {
+
+    shopName: "Mahadeva Power Tools",
+
+    address: "Address not added",
+
+    district: "",
+
+    state: "",
+
+    pin: "",
+
+    phone1: "8137097710",
+
+    phone2: "9061658620",
+
+    email: "mahadevapowertolls3@gmil.com",
+
+    whatsapp: "8137097710"
+
+  };
+
+
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+
+  /* =====================================================
+     LOAD SHOP SETTINGS
+     ===================================================== */
+
+  async function loadSettings() {
+
+    try {
+
+      const ref = doc(db, "settings", "shop");
+
+      const snap = await getDoc(ref);
+
+      if (snap.exists()) {
+
+        shopSettings = {
+          ...shopSettings,
+          ...snap.data()
+        };
+
+      }
+
+      displaySettings();
+
+    } catch(error) {
+
+      console.error(error);
+
+    }
+
+  }
+
+
+  function displaySettings() {
+
+    document.getElementById("shopName").textContent =
+      shopSettings.shopName || "Mahadeva Power Tools";
+
+
+    let address = shopSettings.address || "";
+
+    const extra = [
+
+      shopSettings.district,
+
+      shopSettings.state,
+
+      shopSettings.pin
+
+    ].filter(Boolean).join(", ");
+
+
+    if(extra) {
+
+      address += address ? ", " + extra : extra;
+
+    }
+
+
+    document.getElementById("shopAddress").textContent =
+      address || "Address not added";
+
+
+    document.getElementById("phone1Link").textContent =
+      shopSettings.phone1 || "";
+
+
+    document.getElementById("phone1Link").href =
+      "tel:" + (shopSettings.phone1 || "");
+
+
+    document.getElementById("phone2Link").textContent =
+      shopSettings.phone2 || "";
+
+
+    document.getElementById("phone2Link").href =
+      "tel:" + (shopSettings.phone2 || "");
+
+
+    document.getElementById("emailLink").textContent =
+      shopSettings.email || "";
+
+
+    document.getElementById("emailLink").href =
+      "mailto:" + (shopSettings.email || "");
+
+
+    const wa =
+      (shopSettings.whatsapp || "")
+      .replace(/\D/g, "");
+
+
+    document.getElementById("whatsappContact").href =
+      "https://wa.me/91" + wa;
+
+
+    /* ADMIN FORM */
+
+    document.getElementById("settingShopName").value =
+      shopSettings.shopName || "";
+
+
+    document.getElementById("settingAddress").value =
+      shopSettings.address || "";
+
+
+    document.getElementById("settingDistrict").value =
+      shopSettings.district || "";
+
+
+    document.getElementById("settingState").value =
+      shopSettings.state || "";
+
+
+    document.getElementById("settingPin").value =
+      shopSettings.pin || "";
+
+
+    document.getElementById("settingPhone1").value =
+      shopSettings.phone1 || "";
+
+
+    document.getElementById("settingPhone2").value =
+      shopSettings.phone2 || "";
+
+
+    document.getElementById("settingEmail").value =
+      shopSettings.email || "";
+
+
+    document.getElementById("settingWhatsapp").value =
+      shopSettings.whatsapp || "";
+
+  }
+
+
+  window.saveSettings = async function() {
+
+    try {
+
+      const data = {
+
+        shopName:
+          document.getElementById("settingShopName").value.trim(),
+
+        address:
+          document.getElementById("settingAddress").value.trim(),
+
+        district:
+          document.getElementById("settingDistrict").value.trim(),
+
+        state:
+          document.getElementById("settingState").value.trim(),
+
+        pin:
+          document.getElementById("settingPin").value.trim(),
+
+        phone1:
+          document.getElementById("settingPhone1").value.trim(),
+
+        phone2:
+          document.getElementById("settingPhone2").value.trim(),
+
+        email:
+          document.getElementById("settingEmail").value.trim(),
+
+        whatsapp:
+          document.getElementById("settingWhatsapp").value.trim(),
+
+        updatedAt: serverTimestamp()
+
+      };
+
+
+      await setDoc(
+        doc(db, "settings", "shop"),
+        data,
+        { merge: true }
+      );
+
+
+      shopSettings = {
+        ...shopSettings,
+        ...data
+      };
+
+
+      displaySettings();
+
+
+      alert("Shop details saved successfully.");
+
+    } catch(error) {
+
+      alert("Could not save settings: " + error.message);
+
+    }
+
+  };
+
+
+  /* =====================================================
+     LOAD PRODUCTS
+     ===================================================== */
+
+  async function loadProducts() {
+
+    const container =
+      document.getElementById("products");
+
+    container.innerHTML =
+      '<div class="empty">Loading products...</div>';
+
+
+    try {
+
+      const q = query(
+        collection(db, "products"),
+        orderBy("createdAt", "desc")
+      );
+
+
+      const snapshot = await getDocs(q);
+
+
+      productsData = {};
+
+      if(snapshot.empty) {
+
+        container.innerHTML =
+          '<div class="empty">No products added yet.</div>';
+
+        loadAdminProducts();
+
+        return;
+
+      }
+
+
+      container.innerHTML = "";
+
+
+      snapshot.forEach((item) => {
+
+        const p = {
+          id: item.id,
+          ...item.data()
+        };
+
+
+        productsData[item.id] = p;
+
+
+        const card =
+          document.createElement("div");
+
+        card.className = "product";
+
+
+        card.innerHTML = `
+
+          <img
+            src="${escapeHtml(p.image || '')}"
+            alt="${escapeHtml(p.name || 'Product')}"
+            onerror="this.src='https://via.placeholder.com/500x400?text=Product'"
+          >
+
+          <div class="product-content">
+
+            <h3>
+              ${escapeHtml(p.name || '')}
+            </h3>
+
+            <div class="description">
+              ${escapeHtml(p.description || '')}
+            </div>
+
+            <div class="price">
+              ₹${Number(p.price || 0).toLocaleString("en-IN")}
+            </div>
+
+            <div class="stock">
+              Stock: ${Number(p.stock || 0)}
+            </div>
+
+            <button
+              class="buy"
+              onclick="openOrder('${p.id}')"
+              ${Number(p.stock || 0) <= 0 ? "disabled" : ""}>
+
+              ${Number(p.stock || 0) <= 0
+                ? "Out of Stock"
+                : "🛒 Buy Now"}
+
+            </button>
+
+          </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+      });
+
+
+      loadAdminProducts();
+
+    } catch(error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        `<div class="empty">
+          Could not load products.<br>
+          ${escapeHtml(error.message)}
+        </div>`;
+
+    }
+
+  }
+
+
+  /* =====================================================
+     ADD PRODUCT
+     ===================================================== */
+
+  window.addProduct = async function() {
+
+    const name =
+      document.getElementById("productName").value.trim();
+
+    const image =
+      document.getElementById("productImage").value.trim();
+
+    const price =
+      Number(document.getElementById("productPrice").value);
+
+    const stock =
+      Number(document.getElementById("productStock").value);
+
+    const description =
+      document.getElementById("productDescription").value.trim();
+
+
+    if(!name || !image || price < 0 || stock < 0) {
+
+      alert("Please fill product details correctly.");
+
+      return;
+
+    }
+
+
+    try {
+
+      await addDoc(
+        collection(db, "products"),
+        {
+
+          name,
+
+          image,
+
+          price,
+
+          stock,
+
+          description,
+
+          createdAt: serverTimestamp(),
+
+          updatedAt: serverTimestamp()
+
+        }
+      );
+
+
+      document.getElementById("productName").value = "";
+
+      document.getElementById("productImage").value = "";
+
+      document.getElementById("productPrice").value = "";
+
+      document.getElementById("productStock").value = "";
+
+      document.getElementById("productDescription").value = "";
+
+
+      alert("Product added successfully.");
+
+      loadProducts();
+
+    } catch(error) {
+
+      alert("Could not add product: " + error.message);
+
+    }
+
+  };
+
+
+  /* =====================================================
+     ADMIN PRODUCT LIST
+     ===================================================== */
+
+  async function loadAdminProducts() {
+
+    const box =
+      document.getElementById("adminProducts");
+
+
+    if(!auth.currentUser) {
+
+      box.innerHTML =
+        "<p>Login required.</p>";
+
+      return;
+
+    }
+
+
+    box.innerHTML = "";
+
+
+    Object.values(productsData).forEach((p) => {
+
+      const div =
+        document.createElement("div");
+
+      div.className = "admin-product";
+
+
+      div.innerHTML = `
+
+        <strong>${escapeHtml(p.name)}</strong>
+
+        <p>
+          Price: ₹${Number(p.price || 0).toLocaleString("en-IN")}
+          <br>
+          Stock: ${Number(p.stock || 0)}
+        </p>
+
+        <div class="admin-product-buttons">
+
+          <button
+            class="edit"
+            onclick="editProduct('${p.id}')">
+            Edit
+          </button>
+
+          <button
+            class="delete"
+            onclick="deleteProduct('${p.id}')">
+            Delete
+          </button>
+
+        </div>
+
+      `;
+
+
+      box.appendChild(div);
+
+    });
+
+
+    if(!Object.keys(productsData).length) {
+
+      box.innerHTML =
+        "<p>No products found.</p>";
+
+    }
+
+  }
+
+
+  /* =====================================================
+     EDIT PRODUCT
+     ===================================================== */
+
+  window.editProduct = async function(id) {
+
+    const p = productsData[id];
+
+    if(!p) return;
+
+
+    const name =
+      prompt("Product name:", p.name || "");
+
+
+    if(name === null) return;
+
+
+    const price =
+      prompt("Price:", p.price || 0);
+
+
+    if(price === null) return;
+
+
+    const stock =
+      prompt("Stock:", p.stock || 0);
+
+
+    if(stock === null) return;
+
+
+    const description =
+      prompt("Description:", p.description || "");
+
+
+    if(description === null) return;
+
+
+    try {
+
+      await updateDoc(
+        doc(db, "products", id),
+        {
+
+          name: name.trim(),
+
+          price: Number(price),
+
+          stock: Number(stock),
+
+          description: description.trim(),
+
+          updatedAt: serverTimestamp()
+
+        }
+      );
+
+
+      alert("Product updated.");
+
+      loadProducts();
+
+    } catch(error) {
+
+      alert("Update failed: " + error.message);
+
+    }
+
+  };
+
+
+  /* =====================================================
+     DELETE PRODUCT
+     ===================================================== */
+
+  window.deleteProduct = async function(id) {
+
+    if(!confirm("Delete this product?")) {
+
+      return;
+
+    }
+
+
+    try {
+
+      await deleteDoc(
+        doc(db, "products", id)
+      );
+
+
+      alert("Product deleted.");
+
+      loadProducts();
+
+    } catch(error) {
+
+      alert("Delete failed: " + error.message);
+
+    }
+
+  };
+
+
+  /* =====================================================
+     LOGIN
+     ===================================================== */
+
+  window.openLogin = function() {
+
+    document.getElementById("loginModal").style.display =
+      "flex";
+
+  };
+
+
+  window.closeLogin = function() {
+
+    document.getElementById("loginModal").style.display =
+      "none";
+
+  };
+
+
+  window.loginAdmin = async function() {
+
+    const email =
+      document.getElementById("loginEmail").value.trim();
+
+    const password =
+      document.getElementById("loginPassword").value;
+
+
+    const message =
+      document.getElementById("loginMessage");
+
+
+    try {
+
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+      message.textContent =
+        "Login successful.";
+
+      closeLogin();
+
+    } catch(error) {
+
+      message.textContent =
+        "Login failed. Check email and password.";
+
+      console.error(error);
+
+    }
+
+  };
+
+
+  window.logoutAdmin = async function() {
+
+    await signOut(auth);
+
+    document.getElementById("adminPanel").style.display =
+      "none";
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  };
+
+
+  /* =====================================================
+     AUTH STATE
+     ===================================================== */
+
+  onAuthStateChanged(auth, (user) => {
+
+    if(user) {
+
+      document.getElementById("adminPanel").style.display =
+        "block";
+
+      loadAdminProducts();
+
+    } else {
+
+      document.getElementById("adminPanel").style.display =
+        "none";
+
+    }
+
+  });
+
+
+  /* =====================================================
+     ORDER
+     ===================================================== */
+
+  window.openOrder = function(id) {
+
+    const p = productsData[id];
+
+    if(!p) return;
+
+
+    document.getElementById("orderProductId").value =
+      id;
+
+
+    document.getElementById("orderProductName").textContent =
+      p.name;
+
+
+    document.getElementById("orderProductPrice").textContent =
+      Number(p.price || 0).toLocaleString("en-IN");
+
+
+    document.getElementById("customerQuantity").value =
+      1;
+
+
+    document.getElementById("customerName").value = "";
+
+    document.getElementById("customerMobile").value = "";
+
+    document.getElementById("customerAddress").value = "";
+
+    document.getElementById("orderMessage").textContent = "";
+
+
+    document.getElementById("orderModal").style.display =
+      "flex";
+
+  };
+
+
+  window.closeOrder = function() {
+
+    document.getElementById("orderModal").style.display =
+      "none";
+
+  };
+
+
+  window.placeOrder = async function() {
+
+    const productId =
+      document.getElementById("orderProductId").value;
+
+
+    const p = productsData[productId];
+
+    if(!p) return;
+
+
+    const name =
+      document.getElementById("customerName").value.trim();
+
+    const mobile =
+      document.getElementById("customerMobile").value.trim();
+
+    const address =
+      document.getElementById("customerAddress").value.trim();
+
+    const quantity =
+      Number(document.getElementById("customerQuantity").value);
+
+
+    if(!name || !mobile || !address || quantity < 1) {
+
+      alert("Please enter name, mobile, address and quantity.");
+
+      return;
+
+    }
+
+
+    if(quantity > Number(p.stock || 0)) {
+
+      alert("Not enough stock.");
+
+      return;
+
+    }
+
+
+    const total =
+      Number(p.price || 0) * quantity;
+
+
+    try {
+
+      /* Save order and reduce stock */
+
+      await runTransaction(db, async (transaction) => {
+
+        const productRef =
+          doc(db, "products", productId);
+
+        const productSnap =
+          await transaction.get(productRef);
+
+
+        if(!productSnap.exists()) {
+
+          throw new Error("Product not found.");
+
+        }
+
+
+        const currentStock =
+          Number(productSnap.data().stock || 0);
+
+
+        if(currentStock < quantity) {
+
+          throw new Error("Not enough stock.");
+
+        }
+
+
+        transaction.update(
+          productRef,
+          {
+            stock: currentStock - quantity,
+            updatedAt: serverTimestamp()
+          }
+        );
+
+
+        const orderRef =
+          doc(collection(db, "orders"));
+
+
+        transaction.set(
+          orderRef,
+          {
+
+            productId,
+
+            productName: p.name,
+
+            price: Number(p.price || 0),
+
+            quantity,
+
+            total,
+
+            customerName: name,
+
+            customerMobile: mobile,
+
+            customerAddress: address,
+
+            status: "New",
+
+            createdAt: serverTimestamp()
+
+          }
+        );
+
+      });
+
+
+      /* WhatsApp message */
+
+      const waNumber =
+        (shopSettings.whatsapp || "8137097710")
+        .replace(/\D/g, "");
+
+
+      const message =
+
+`Mahadeva Power Tools - New Order
+
+Product: ${p.name}
+Quantity: ${quantity}
+Price: ₹${Number(p.price || 0).toLocaleString("en-IN")}
+Total: ₹${total.toLocaleString("en-IN")}
+
+Customer Name: ${name}
+Mobile: ${mobile}
+Delivery Address: ${address}`;
+
+
+      const url =
+        "https://wa.me/91" +
+        waNumber +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+      closeOrder();
+
+      loadProducts();
+
+
+      window.open(url, "_blank");
+
+
+    } catch(error) {
+
+      alert(
+        "Order failed: " +
+        error.message
+      );
+
+    }
+
+  };
+
+
+  /* =====================================================
+     NAVIGATION
+     ===================================================== */
+
+  window.scrollToProducts = function() {
+
+    document.getElementById("productsSection")
+      .scrollIntoView({
+        behavior: "smooth"
+      });
+
+  };
+
+
+  window.scrollToContact = function() {
+
+    document.getElementById("contactSection")
+      .scrollIntoView({
+        behavior: "smooth"
+      });
+
+  };
+
+
+  /* =====================================================
+     SECURITY: HTML ESCAPE
+     ===================================================== */
+
+  function escapeHtml(value) {
+
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  /* =====================================================
+     START
+     ===================================================== */
+
+  loadSettings();
+
+  loadProducts();
+
+</script>
+
+</body>
+</html>
